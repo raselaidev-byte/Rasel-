@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rasel — Politics · Geopolitics · Technology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #111;
+      overflow-x: hidden;
+    }
+
+    /* ── COLORS ── */
+    :root {
+      --saffron: #FF9933;
+      --white:   #FFFFFF;
+      --green:   #138808;
+      --navy:    #000080;
+      --navy-dark: #00004d;
+      --navy-mid:  #000066;
+      --ink: #0a0a1a;
+    }
+
+    /* ── TRICOLOR STRIPE ── */
+    .tricolor-stripe {
+      display: flex;
+      height: 6px;
+      width: 100%;
+    }
+    .tricolor-stripe span {
+      flex: 1;
+    }
+    .tricolor-stripe .s { background: var(--saffron); }
+    .tricolor-stripe .w { background: var(--white); border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; }
+    .tricolor-stripe .g { background: var(--green); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 6px;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(0,0,64,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 3px solid;
+      border-image: linear-gradient(90deg, var(--saffron) 33.3%, var(--white) 33.3% 66.6%, var(--green) 66.6%) 1;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: var(--white);
+      letter-spacing: 3px;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--saffron); }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--saffron); }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 69px;
+      left: 0; right: 0;
+      background: rgba(0,0,64,0.98);
+      padding: 20px 24px 28px;
+      z-index: 99;
+      border-bottom: 3px solid var(--saffron);
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block;
+      padding: 12px 0;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: var(--navy-dark);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding-top: 69px;
+    }
+    .hero-map-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://i.ibb.co/DDK5p7Zd/99a06929ece260ac95f83d534e0a4df2.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--saffron);
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: var(--saffron);
+    }
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 9vw, 120px);
+      line-height: 0.92;
+      color: var(--white);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .hero-name .accent { color: var(--saffron); }
+    .hero-tagline {
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 1px;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    .topic-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .pill {
+      padding: 7px 18px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .pill-saffron { background: rgba(255,153,51,0.15); color: var(--saffron); border: 1px solid rgba(255,153,51,0.4); }
+    .pill-green   { background: rgba(19,136,8,0.15);  color: #3ecf2e;          border: 1px solid rgba(19,136,8,0.4); }
+    .pill-white   { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.2); }
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .btn-primary {
+      padding: 14px 32px;
+      background: var(--saffron);
+      color: var(--navy-dark);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.2s;
+      border-radius: 2px;
+    }
+    .btn-primary:hover { background: #e8881f; }
+    .btn-outline {
+      padding: 14px 32px;
+      background: transparent;
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.2s;
+      border-radius: 2px;
+    }
+    .btn-outline:hover { border-color: var(--saffron); color: var(--saffron); }
+
+    /* Profile Card */
+    .hero-card {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .profile-ring-outer {
+      position: relative;
+      width: 340px;
+      height: 340px;
+    }
+    .profile-ring-outer::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: conic-gradient(var(--saffron) 0deg 120deg, var(--white) 120deg 240deg, var(--green) 240deg 360deg);
+      animation: spin 8s linear infinite;
+    }
+    .profile-ring-outer::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 50%;
+      background: var(--navy-dark);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .profile-img {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+    .hero-stat-badge {
+      position: absolute;
+      bottom: 20px;
+      right: -10px;
+      background: var(--saffron);
+      color: var(--navy-dark);
+      padding: 10px 16px;
+      border-radius: 4px;
+      z-index: 5;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .hero-stat-badge .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      line-height: 1;
+      display: block;
+    }
+    .hero-stat-badge .stat-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .scroll-arrow {
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid rgba(255,255,255,0.3);
+      border-bottom: 2px solid rgba(255,255,255,0.3);
+      transform: rotate(45deg);
+      animation: bounce 1.6s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(5px)} }
+
+    /* ── FADE-IN ANIMATION (non-hero) ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 100px 24px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .eyebrow-saffron { color: var(--saffron); }
+    .eyebrow-green   { color: var(--green); }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(40px, 5vw, 64px);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: #fff; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-text p {
+      font-size: 16px;
+      line-height: 1.85;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .about-quote {
+      border-left: 4px solid var(--saffron);
+      padding-left: 20px;
+      margin: 28px 0;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--navy);
+      font-style: italic;
+    }
+    .about-map-wrap {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .about-map-wrap img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+    }
+    .about-map-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,0,128,0.25) 0%, rgba(255,153,51,0.15) 100%);
+      border-radius: 4px;
+    }
+    .about-flag-accent {
+      display: flex;
+      gap: 0;
+      height: 4px;
+      margin-bottom: 24px;
+      border-radius: 2px;
+      overflow: hidden;
+      width: 80px;
+    }
+    .about-flag-accent span { flex: 1; }
+
+    /* ── FOCUS AREAS ── */
+    #focus { background: var(--ink); }
+    #focus .section-title { color: var(--white); }
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .focus-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      padding: 40px 32px;
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .focus-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .focus-card.card-saffron::before { background: var(--saffron); }
+    .focus-card.card-green::before   { background: var(--green); }
+    .focus-card.card-white::before   { background: rgba(255,255,255,0.5); }
+    .focus-card:hover {
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .focus-icon {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .focus-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .focus-card p {
+      font-size: 14px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ── SOCIAL PLATFORMS ── */
+    #social { background: #f7f5f2; }
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .social-card {
+      border-radius: 6px;
+      padding: 36px 28px;
+      text-decoration: none;
+      display: block;
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .social-card-ig  { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+    .social-card-x   { background: #000; border: 1px solid #222; }
+    .social-card-yt  { background: #ff0000; }
+    .social-card:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(0,0,0,0.2); }
+    .social-card-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+      display: block;
+    }
+    .social-card-handle {
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 6px;
+    }
+    .social-card-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .social-card-arrow {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      font-size: 22px;
+      color: rgba(255,255,255,0.4);
+      transition: 0.2s;
+    }
+    .social-card:hover .social-card-arrow { color: #fff; transform: translate(3px,-3px); }
+
+    /* ── REELS ── */
+    #reels { background: var(--navy-dark); }
+    #reels .section-title { color: var(--white); }
+    #reels .section-eyebrow { color: var(--saffron); }
+    .reels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .reel-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .reel-embed-wrap {
+      background: #000;
+      display: flex;
+      justify-content: center;
+    }
+    .reel-embed-wrap blockquote {
+      margin: 0 !important;
+    }
+    .reel-title {
+      padding: 14px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+    }
+    .reels-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(255,255,255,0.3);
+      font-size: 15px;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: #fff; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-info p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #555;
+      margin-bottom: 28px;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 14px; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+    }
+    .contact-link-icon {
+      width: 40px;
+      height: 40px;
+      background: #f0f0f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #666;
+    }
+    .form-group input, .form-group textarea {
+      padding: 14px 16px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #111;
+      outline: none;
+      transition: border-color 0.2s;
+      background: #fafafa;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--saffron);
+      background: #fff;
+    }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .form-msg { font-size: 13px; margin-top: 4px; display: none; }
+    .form-msg.success { color: var(--green); display: block; }
+    .form-msg.error   { color: #c0392b; display: block; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-dark);
+      padding: 48px 24px 24px;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      color: var(--white);
+      letter-spacing: 4px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .footer-logo span { color: var(--saffron); }
+    .footer-socials { display: flex; gap: 16px; }
+    .footer-social-link {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+    .footer-social-link:hover { background: var(--saffron); color: var(--navy-dark); }
+    .footer-bottom {
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-copy { font-size: 12px; }
+    .footer-made { font-size: 12px; }
+    .footer-tricolor {
+      margin-top: 28px;
+    }
+
+    /* ── ADMIN PANEL ── */
+    #admin-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    #admin-overlay.open { display: flex; }
+    #admin-panel {
+      background: #0a0a1a;
+      border: 1px solid rgba(255,153,51,0.3);
+      border-radius: 8px;
+      width: 560px;
+      max-width: calc(100vw - 40px);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 36px;
+    }
+    #admin-panel h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      color: var(--saffron);
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+    }
+    #admin-login, #admin-main { display: none; }
+    #admin-login.active, #admin-main.active { display: block; }
+    .admin-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      margin-bottom: 12px;
+      outline: none;
+    }
+    .admin-input:focus { border-color: var(--saffron); }
+    .admin-btn {
+      padding: 11px 24px;
+      background: var(--saffron);
+      color: var(--navy-dark);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .admin-btn:hover { background: #e88320; }
+    .admin-btn-danger {
+      background: #c0392b;
+      color: #fff;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .admin-close {
+      float: right;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-size: 22px;
+      cursor: pointer;
+      margin-top: -8px;
+    }
+    .admin-error { color: #e74c3c; font-size: 13px; margin-bottom: 10px; }
+    .admin-success { color: #2ecc71; font-size: 13px; margin-bottom: 10px; }
+    .admin-reel-list { margin-top: 28px; }
+    .admin-reel-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      gap: 12px;
+    }
+    .admin-reel-info { flex: 1; }
+    .admin-reel-title { font-size: 13px; font-weight: 600; color: #fff; }
+    .admin-reel-url { font-size: 11px; color: rgba(255,255,255,0.4); word-break: break-all; }
+    .admin-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 14px;
+      margin-top: 28px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+        justify-items: center;
+        padding: 40px 24px 60px;
+      }
+      .hero-card { order: -1; }
+      .profile-ring-outer { width: 240px; height: 240px; }
+      .topic-pills { justify-content: center; }
+      .hero-ctas { justify-content: center; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .focus-grid { grid-template-columns: 1fr; }
+      .social-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero-eyebrow { justify-content: center; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 70px 20px; }
+      .focus-grid { gap: 16px; }
+      .social-grid { gap: 16px; }
+      .reels-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- FIXED TRICOLOR TOP STRIPE -->
+<div class="tricolor-stripe" style="position:fixed;top:0;left:0;right:0;z-index:200;">
+  <span class="s"></span><span class="w"></span><span class="g"></span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">RASEL<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#focus">Focus</a></li>
+      <li><a href="#social">Follow</a></li>
+      <li><a href="#reels">Reels</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about"   onclick="closeMobileMenu()">About</a>
+  <a href="#focus"   onclick="closeMobileMenu()">Focus</a>
+  <a href="#social"  onclick="closeMobileMenu()">Follow</a>
+  <a href="#reels"   onclick="closeMobileMenu()">Reels</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero">
+  <div class="hero-map-bg"></div>
+  <div class="hero-inner">
+    <!-- LEFT: Text -->
+    <div class="hero-left">
+      <div class="hero-eyebrow">Content Creator &amp; Analyst</div>
+      <h1 class="hero-name">RASEL<br><span class="accent">SPEAKS.</span></h1>
+      <p class="hero-tagline">
+        Cutting through noise on politics, geopolitics,<br>
+        and the technology reshaping our world.
+      </p>
+      <div class="topic-pills">
+        <span class="pill pill-saffron">Politics</span>
+        <span class="pill pill-green">Geopolitics</span>
+        <span class="pill pill-white">Technology</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#reels" class="btn-primary">Watch Reels</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: Profile Card -->
+    <div class="hero-card">
+      <div class="profile-ring-outer">
+        <div class="profile-img">
+          <img
+            src="https://i.ibb.co/RT6ztR2j/129f5800d177740e07be54798f2ba354.jpg"
+            alt="Rasel — Content Creator"
+            width="340"
+            height="340"
+            loading="eager"
+          />
+        </div>
+      </div>
+      <div class="hero-stat-badge">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Platforms</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-arrow"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════ ABOUT ══════════════ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <!-- Left: Text -->
+      <div class="about-text fade-in">
+        <div class="section-eyebrow eyebrow-saffron">Who is Rasel</div>
+        <div class="about-flag-accent">
+          <span style="background:var(--saffron)"></span>
+          <span style="background:#ddd"></span>
+          <span style="background:var(--green)"></span>
+        </div>
+        <h2 class="section-title" style="color:var(--navy);">THE VOICE<br>BEHIND THE TAKE.</h2>
+        <p>
+          Rasel is an independent content creator and political analyst producing sharp, context-driven commentary on the issues that define our era — from parliamentary politics and electoral battles to the quiet power shifts reshaping the global order.
+        </p>
+        <blockquote class="about-quote">
+          "Every headline has a history. Every data point tells a story. My job is to make that story impossible to ignore."
+        </blockquote>
+        <p>
+          Across Instagram, X/Twitter, and YouTube, Rasel brings research-backed insight to audiences who want more than talking points. Whether it's the tectonic shifts in South Asian geopolitics or the way AI is rewiring economies, the analysis is always grounded, never sensational.
+        </p>
+      </div>
+
+      <!-- Right: India Map Image -->
+      <div class="about-map-wrap fade-in fade-in-delay-2">
+        <img
+          src="https://i.ibb.co/DDK5p7Zd/99a06929ece260ac95f83d534e0a4df2.jpg"
+          alt="India — Political Geography"
+          width="560"
+          height="480"
+          loading="lazy"
+        />
+        <div class="about-map-overlay"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOCUS AREAS ══════════════ -->
+<section id="focus">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-eyebrow eyebrow-saffron">What I Cover</div>
+      <h2 class="section-title" style="color:var(--white);">THREE LENSES.<br>ONE WORLD.</h2>
+    </div>
+    <div class="focus-grid">
+      <div class="focus-card card-saffron fade-in fade-in-delay-1">
+        <img
+          class="focus-icon"
+          src="https://i.ibb.co/MxSgPmw3/file-00000000340871fdad5484fac639b3eb.png"
+          alt="Politics"
+          width="72"
+          height="72"
+          loading="lazy"
+        />
+        <h3>Politics</h3>
+        <p>
+          From election forensics to policy dissection — tracking power, accountability, and the forces that shape democratic societies.
+        </p>
+      </div>
+      <div class="focus-card card-green fade-in fade-in-delay-2">
+        <img
+          class="focus-icon"
+          src="https://i.ibb.co/bMLj74bN/file-00000000e65071fda3ebab35fab6b453.png"
+          alt="Geopolitics"
+          width="72"
+          height="72"
+          loading="lazy"
+        />
+        <h3>Geopolitics</h3>
+        <p>
+          Borders, alliances, rivalries, and the long arc of history. Deep dives into South Asia, global power competition, and shifting world orders.
+        </p>
+      </div>
+      <div class="focus-card card-white fade-in fade-in-delay-3">
+        <img
+          class="focus-icon"
+          src="https://i.ibb.co/BHQyWFfF/file-00000000ffc471f884113c91d012200d.png"
+          alt="Technology"
+          width="72"
+          height="72"
+          loading="lazy"
+        />
+        <h3>Technology</h3>
+        <p>
+          AI, digital sovereignty, surveillance capitalism, and the infrastructure of the 21st-century state — explained without the hype.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SOCIAL PLATFORMS ══════════════ -->
+<section id="social">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-eyebrow eyebrow-green">Find Me On</div>
+      <h2 class="section-title" style="color:var(--navy);">FOLLOW THE<br>CONVERSATION.</h2>
+    </div>
+    <div class="social-grid">
+      <a href="https://instagram.com/co.rasel" target="_blank" rel="noopener" class="social-card social-card-ig fade-in fade-in-delay-1">
+        <span class="social-card-logo">IG</span>
+        <div class="social-card-handle">@co.rasel</div>
+        <div class="social-card-desc">Instagram · Reels &amp; Stories</div>
+        <span class="social-card-arrow">↗</span>
+      </a>
+      <a href="https://x.com/co_rasel" target="_blank" rel="noopener" class="social-card social-card-x fade-in fade-in-delay-2">
+        <span class="social-card-logo">𝕏</span>
+        <div class="social-card-handle">@co_rasel</div>
+        <div class="social-card-desc">X · Threads &amp; Hot Takes</div>
+        <span class="social-card-arrow">↗</span>
+      </a>
+      <a href="https://youtube.com/@co_rasel_0" target="_blank" rel="noopener" class="social-card social-card-yt fade-in fade-in-delay-3">
+        <span class="social-card-logo">YT</span>
+        <div class="social-card-handle">@co_rasel_0</div>
+        <div class="social-card-desc">YouTube · Long-Form Analysis</div>
+        <span class="social-card-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ INSTAGRAM REELS ══════════════ -->
+<section id="reels">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-eyebrow">Latest Reels</div>
+      <h2 class="section-title">WATCH &amp; SHARE.</h2>
+    </div>
+    <div class="reels-grid" id="reelsGrid">
+      <div class="reels-empty" id="reelsEmpty">Loading reels…</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="fade-in">
+        <div class="section-eyebrow eyebrow-saffron">Get In Touch</div>
+        <h2 class="section-title" style="color:var(--navy);">LET'S TALK<br>ABOUT IT.</h2>
+        <p>For collaborations, media inquiries, or just to share a perspective — reach out directly.</p>
+        <div class="contact-links">
+          <a href="https://instagram.com/co.rasel" target="_blank" class="contact-link">
+            <div class="contact-link-icon">📸</div>
+            @co.rasel on Instagram
+          </a>
+          <a href="https://x.com/co_rasel" target="_blank" class="contact-link">
+            <div class="contact-link-icon">𝕏</div>
+            @co_rasel on X
+          </a>
+          <a href="https://youtube.com/@co_rasel_0" target="_blank" class="contact-link">
+            <div class="contact-link-icon">▶</div>
+            @co_rasel_0 on YouTube
+          </a>
+        </div>
+      </div>
+
+      <div class="fade-in fade-in-delay-2">
+        <form class="contact-form" id="contactForm" onsubmit="handleContact(event)">
+          <div class="form-group">
+            <label for="cf-name">Your Name</label>
+            <input type="text" id="cf-name" placeholder="Priya Sharma" required />
+          </div>
+          <div class="form-group">
+            <label for="cf-email">Email Address</label>
+            <input type="email" id="cf-email" placeholder="hello@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="cf-msg">Message</label>
+            <textarea id="cf-msg" placeholder="What's on your mind?" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%;">Send Message</button>
+          <div class="form-msg" id="contactMsg"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo" id="footerLogo" title="Click 5 times to access admin">
+        RASEL<span>.</span>
+      </div>
+      <div class="footer-socials">
+        <a href="https://instagram.com/co.rasel" target="_blank" class="footer-social-link" rel="noopener">IG</a>
+        <a href="https://x.com/co_rasel" target="_blank" class="footer-social-link" rel="noopener">𝕏</a>
+        <a href="https://youtube.com/@co_rasel_0" target="_blank" class="footer-social-link" rel="noopener">YT</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Rasel. All rights reserved.</div>
+      <div class="footer-made">Politics · Geopolitics · Technology</div>
+    </div>
+  </div>
+  <div class="footer-tricolor">
+    <div class="tricolor-stripe"><span class="s"></span><span class="w"></span><span class="g"></span></div>
+  </div>
+</footer>
+
+<!-- ══════════════ ADMIN OVERLAY ══════════════ -->
+<div id="admin-overlay">
+  <div id="admin-panel">
+    <button class="admin-close" onclick="closeAdmin()">✕</button>
+    <h2>⚙ ADMIN PANEL</h2>
+
+    <!-- Login -->
+    <div id="admin-login" class="active">
+      <div class="admin-section-title">Enter Password</div>
+      <input type="password" class="admin-input" id="adminPassword" placeholder="Password" />
+      <div class="admin-error" id="adminLoginErr" style="display:none">Incorrect password.</div>
+      <button class="admin-btn" onclick="adminLogin()">Login</button>
+    </div>
+
+    <!-- Main -->
+    <div id="admin-main">
+      <div class="admin-section-title">Add New Reel</div>
+      <input type="url" class="admin-input" id="newReelUrl" placeholder="Instagram Reel URL (https://www.instagram.com/reel/…)" />
+      <input type="text" class="admin-input" id="newReelTitle" placeholder="Reel title (optional)" />
+      <div id="adminAddMsg" style="display:none;font-size:13px;margin-bottom:10px;"></div>
+      <button class="admin-btn" onclick="adminAddReel()">Add Reel</button>
+
+      <div class="admin-reel-list" id="adminReelList">
+        <div class="admin-section-title">Saved Reels</div>
+        <div id="adminReelItems" style="color:rgba(255,255,255,0.4);font-size:13px;">Loading…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ INSTAGRAM EMBED SCRIPT ══════════════ -->
+<script async src="https://www.instagram.com/embed.js"></script>
+
+<!-- ══════════════ FIREBASE ══════════════ -->
+<script type="module">
+  import { initializeApp }              from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp }
+    from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAv4XHnB9YuGEERg3YbGmBBDnJzXrR5zBw",
+    authDomain: "myprotfolio-bc338.firebaseapp.com",
+    projectId: "myprotfolio-bc338",
+    storageBucket: "myprotfolio-bc338.firebasestorage.app",
+    messagingSenderId: "502082990515",
+    appId: "1:502082990515:web:fc88658b120504540d1bc6"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  // ── Load reels on page ──────────────────────────────────
+  async function loadReels() {
+    const grid  = document.getElementById('reelsGrid');
+    const empty = document.getElementById('reelsEmpty');
+    try {
+      const q = query(collection(db, 'reels'), orderBy('addedAt', 'desc'));
+      const snap = await getDocs(q);
+
+      if (snap.empty) {
+        empty.textContent = 'No reels added yet. Check back soon!';
+        return;
+      }
+      empty.remove();
+
+      snap.forEach(docSnap => {
+        const data = docSnap.data();
+        const card = document.createElement('div');
+        card.className = 'reel-card';
+        card.innerHTML = `
+          <div class="reel-embed-wrap">
+            <blockquote
+              class="instagram-media"
+              data-instgrm-permalink="${escapeHtml(data.url)}"
+              data-instgrm-version="14"
+              style="background:#000;border:0;border-radius:3px;box-shadow:none;margin:0;max-width:100%;min-width:260px;padding:0;width:calc(100% - 2px);">
+            </blockquote>
+          </div>
+          ${data.title ? `<div class="reel-title">${escapeHtml(data.title)}</div>` : ''}
+        `;
+        grid.appendChild(card);
+      });
+
+      // Re-run embed
+      if (window.instgrm) window.instgrm.Embeds.process();
+    } catch (e) {
+      empty.textContent = 'Could not load reels.';
+      console.error(e);
+    }
+  }
+
+  // ── Admin: Load reels list ──────────────────────────────
+  async function adminLoadReels() {
+    const container = document.getElementById('adminReelItems');
+    container.textContent = 'Loading…';
+    try {
+      const q = query(collection(db, 'reels'), orderBy('addedAt', 'desc'));
+      const snap = await getDocs(q);
+
+      if (snap.empty) { container.textContent = 'No reels saved yet.'; return; }
+      container.innerHTML = '';
+
+      snap.forEach(docSnap => {
+        const data = docSnap.data();
+        const row = document.createElement('div');
+        row.className = 'admin-reel-item';
+        row.innerHTML = `
+          <div class="admin-reel-info">
+            <div class="admin-reel-title">${escapeHtml(data.title || 'Untitled Reel')}</div>
+            <div class="admin-reel-url">${escapeHtml(data.url)}</div>
+          </div>
+          <button class="admin-btn-danger" data-id="${docSnap.id}">Delete</button>
+        `;
+        row.querySelector('button').addEventListener('click', async () => {
+          if (!confirm('Delete this reel?')) return;
+          await deleteDoc(doc(db, 'reels', docSnap.id));
+          row.remove();
+          loadReels();
+        });
+        container.appendChild(row);
+      });
+    } catch (e) {
+      container.textContent = 'Error loading reels.';
+    }
+  }
+
+  // ── Admin: Add reel ─────────────────────────────────────
+  window.adminAddReel = async function() {
+    const urlEl   = document.getElementById('newReelUrl');
+    const titleEl = document.getElementById('newReelTitle');
+    const msgEl   = document.getElementById('adminAddMsg');
+    const url     = urlEl.value.trim();
+    const title   = titleEl.value.trim();
+
+    msgEl.style.display = 'none';
+    if (!url || !url.includes('instagram.com')) {
+      msgEl.style.color = '#e74c3c';
+      msgEl.textContent = 'Please enter a valid Instagram URL.';
+      msgEl.style.display = 'block';
+      return;
+    }
+    try {
+      await addDoc(collection(db, 'reels'), { url, title, addedAt: serverTimestamp() });
+      msgEl.style.color = '#2ecc71';
+      msgEl.textContent = 'Reel added successfully!';
+      msgEl.style.display = 'block';
+      urlEl.value = '';
+      titleEl.value = '';
+      adminLoadReels();
+      loadReels();
+    } catch (e) {
+      msgEl.style.color = '#e74c3c';
+      msgEl.textContent = 'Failed to add reel: ' + e.message;
+      msgEl.style.display = 'block';
+    }
+  };
+
+  // Expose for admin panel
+  window._adminLoadReels = adminLoadReels;
+
+  // Boot
+  loadReels();
+</script>
+
+<!-- ══════════════ GENERAL JS ══════════════ -->
+<script>
+  // ── Escape helper ───────────────────────────────────────
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  window.escapeHtml = escapeHtml;
+
+  // ── Mobile Menu ─────────────────────────────────────────
+  document.getElementById('hamburgerBtn').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+  function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // ── Scroll Fade-In ──────────────────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── Contact Form (UI only — no backend needed) ──────────
+  function handleContact(e) {
+    e.preventDefault();
+    const msg = document.getElementById('contactMsg');
+    msg.className = 'form-msg success';
+    msg.textContent = '✓ Message received! Rasel will get back to you soon.';
+    e.target.reset();
+  }
+  window.handleContact = handleContact;
+
+  // ── Footer Logo → Admin (5 clicks) ──────────────────────
+  let footerClicks = 0;
+  let footerTimer;
+  document.getElementById('footerLogo').addEventListener('click', () => {
+    footerClicks++;
+    clearTimeout(footerTimer);
+    footerTimer = setTimeout(() => { footerClicks = 0; }, 3000);
+    if (footerClicks >= 5) {
+      footerClicks = 0;
+      openAdmin();
+    }
+  });
+
+  function openAdmin() {
+    document.getElementById('admin-overlay').classList.add('open');
+    // Reset to login state
+    document.getElementById('admin-login').classList.add('active');
+    document.getElementById('admin-main').classList.remove('active');
+    document.getElementById('adminLoginErr').style.display = 'none';
+    document.getElementById('adminPassword').value = '';
+  }
+  function closeAdmin() {
+    document.getElementById('admin-overlay').classList.remove('open');
+  }
+  window.closeAdmin = closeAdmin;
+
+  // Close on backdrop click
+  document.getElementById('admin-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeAdmin();
+  });
+
+  // ── Admin Login ─────────────────────────────────────────
+  window.adminLogin = function() {
+    const pw = document.getElementById('adminPassword').value;
+    const err = document.getElementById('adminLoginErr');
+    if (pw === 'Rasel@2026') {
+      document.getElementById('admin-login').classList.remove('active');
+      document.getElementById('admin-main').classList.add('active');
+      if (window._adminLoadReels) window._adminLoadReels();
+    } else {
+      err.style.display = 'block';
+    }
+  };
+
+  // Allow Enter key in password field
+  document.getElementById('adminPassword').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') window.adminLogin();
+  });
+</script>
+</body>
+</html>
